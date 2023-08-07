@@ -11,7 +11,10 @@ function check_censys_and_refill()
   curr_quota=$(censys account | grep "/" | awk '{print $5}')
 
   if [ "$curr_quota" -gt 249 ]; then
-    echo "Censys limit quota reached: $curr_quota"
+    # PRINT CURRENT QUOTA 
+    email=$(censys account | grep "Email" | awk '{print $4}')
+    echo "Censys [$email] limit quota reached: $curr_quota"
+    
     for curr_api in "${censys_api_list[@]}"
     do	
         # GET AND REFILL NEW KEYS
